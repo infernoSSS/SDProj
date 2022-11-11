@@ -9,7 +9,8 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
-		config.setTitle("SDProj");
+		config.setTitle("Space and Dice");
+		config.setWindowedMode(1240, 720);
 		new Lwjgl3Application(new SDGame(), config);
 	}
 }
