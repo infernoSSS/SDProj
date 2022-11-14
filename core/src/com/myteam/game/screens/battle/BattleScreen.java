@@ -18,7 +18,7 @@ import java.util.List;
 
 public class BattleScreen implements Screen {
 
-    final SDGame game;
+    private final SDGame game;
 
     private TextureAtlas atlas;
     private Background background;
@@ -26,7 +26,7 @@ public class BattleScreen implements Screen {
     private Viewport viewport;
     private OrthographicCamera camera;
     private boolean inTravel = true;
-    private Music MusicLoopBattleScreen;
+    private Music musicLoopBattleScreen;
 
     public BattleScreen(final SDGame game) {
         this.game = game;
@@ -38,10 +38,10 @@ public class BattleScreen implements Screen {
         background = new Background("desert", atlas);
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 1240, 720);
-        viewport = new FitViewport(1240, 720, camera);
-        MusicLoopBattleScreen = Gdx.audio.newMusic(Gdx.files.internal("MusicLoopBattleScreen.wav"));
-        MusicLoopBattleScreen.play();
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
+        musicLoopBattleScreen = Gdx.audio.newMusic(Gdx.files.internal("MusicLoopBattleScreen.wav"));
+        musicLoopBattleScreen.play();
     }
 
     @Override
@@ -75,7 +75,8 @@ public class BattleScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        musicLoopBattleScreen.dispose();
+        atlas.dispose();
     }
 
     private static class Background {
@@ -91,7 +92,7 @@ public class BattleScreen implements Screen {
             ground = atlas.findRegion(name + "_ground");
             themeOffset = 0;
         }
-
+        
         void render(SpriteBatch batch, boolean inTravel) {
             batch.draw(back, 0, 0);
             if (!inTravel) {
