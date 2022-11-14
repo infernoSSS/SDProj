@@ -13,32 +13,29 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.myteam.game.SDGame;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BattleScreen implements Screen {
 
     final SDGame game;
 
-    TextureAtlas atlas;
-    TextureRegion regionBackground;
-    TextureRegion regionGround;
-    TextureRegion regionSquare;
-    SpriteBatch batch;
+    private TextureAtlas atlas;
+    private Background background;
+    private SpriteBatch batch;
     private Viewport viewport;
-    OrthographicCamera camera;
-    boolean inTravel = true;
-    Music MusicLoopBattleScreen;
-    float speedInTravel = 0;
+    private OrthographicCamera camera;
+    private boolean inTravel = true;
+    private Music MusicLoopBattleScreen;
 
-    public BattleScreen(final SDGame gam) {
-        game = gam;
-
+    public BattleScreen(final SDGame game) {
+        this.game = game;
     }
 
     @Override
     public void show() {
         atlas = new TextureAtlas(Gdx.files.internal("atlas.atlas"));
-        regionBackground = atlas.findRegion("Background");
-        regionGround = atlas.findRegion("Ground");
-        regionSquare = atlas.findRegion("Square");
+        background = new Background("desert", atlas);
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1240, 720);
@@ -52,18 +49,7 @@ public class BattleScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        batch.draw(regionBackground,0, 0);
-        if (!inTravel){
-            batch.draw(regionGround,0, 0);
-        }else{
-            batch.draw(regionGround,speedInTravel, 0);
-            speedInTravel -= 5;
-            batch.draw(regionGround,speedInTravel+1240, 0);
-        }
-        if (speedInTravel == -1240){
-            speedInTravel = 0;
-        }
-        batch.draw(regionSquare,0, 0);
+        background.render(batch, inTravel);
         batch.end();
     }
 
@@ -90,5 +76,35 @@ public class BattleScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    private static class Background {
+        float themeOffset;
+        TextureRegion back;
+        TextureRegion theme;
+        TextureRegion ground;
+
+
+        Background(String name, TextureAtlas atlas) {
+            back = atlas.findRegion(name + "_back");
+            theme = atlas.findRegion(name + "_theme");
+            ground = atlas.findRegion(name + "_ground");
+            themeOffset = 0;
+        }
+
+        void render(SpriteBatch batch, boolean inTravel) {
+            batch.draw(back, 0, 0);
+            if (!inTravel) {
+                batch.draw(theme, themeOffset, 0);
+            } else {
+                batch.draw(theme, themeOffset, 0);
+                themeOffset -= Gdx.graphics.getWidth() / 6 * Gdx.graphics.getDeltaTime();
+                batch.draw(theme, themeOffset + Gdx.graphics.getWidth(), 0);
+            }
+            if (themeOffset <= -Gdx.graphics.getWidth()) {
+                themeOffset = 0;
+            }
+            batch.draw(ground, 0, 0);
+        }
     }
 }
