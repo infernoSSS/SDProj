@@ -40,8 +40,8 @@ public class BattleScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
-        musicLoopBattleScreen.setLooping(true);
         musicLoopBattleScreen = Gdx.audio.newMusic(Gdx.files.internal("MusicLoopBattleScreen.wav"));
+        musicLoopBattleScreen.setLooping(true);
         musicLoopBattleScreen.play();
     }
 
