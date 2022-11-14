@@ -101,9 +101,9 @@ public class BattleScreen implements Screen {
             } else {
                 batch.draw(theme, themeOffset, 0);
                 themeOffset -= Gdx.graphics.getWidth() / 6 * Gdx.graphics.getDeltaTime();
-                batch.draw(theme, themeOffset + 1240, 0);
+                batch.draw(theme, themeOffset + theme.getRegionWidth(), 0);
             }
-            if (themeOffset <= -1240) {
+            if (themeOffset <= -theme.getRegionWidth()) {
                 themeOffset = 0;
             }
             batch.draw(ground, 0, 0);
