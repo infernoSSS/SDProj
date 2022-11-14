@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.myteam.game.SDGame;
@@ -101,9 +102,9 @@ public class BattleScreen implements Screen {
             } else {
                 batch.draw(theme, themeOffset, 0);
                 themeOffset -= Gdx.graphics.getWidth() / 6 * Gdx.graphics.getDeltaTime();
-                batch.draw(theme, themeOffset + Gdx.graphics.getWidth(), 0);
+                batch.draw(theme, themeOffset + 1240, 0);
             }
-            if (themeOffset <= -Gdx.graphics.getWidth()) {
+            if (themeOffset <= -1240) {
                 themeOffset = 0;
             }
             batch.draw(ground, 0, 0);
