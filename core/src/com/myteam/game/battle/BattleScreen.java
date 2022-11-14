@@ -60,9 +60,9 @@ public class BattleScreen implements Screen {
         }else{
             batch.draw(regionGround,speedInTravel, 0);
             speedInTravel -= 5;
-            batch.draw(regionGround,speedInTravel-1240, 0);
+            batch.draw(regionGround,speedInTravel+1240, 0);
         }
-        if (speedInTravel == 1240){
+        if (speedInTravel == -1240){
             speedInTravel = 0;
         }
         batch.draw(regionSquare,0, 0);
