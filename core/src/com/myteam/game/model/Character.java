@@ -15,7 +15,7 @@ public interface Character {
 
 	Animation getFightAnimation();
 
-	Card getCard(String cardName);
+	Card getCard(int cardNumber);
 
 	BattlePosition getPosition();
 
