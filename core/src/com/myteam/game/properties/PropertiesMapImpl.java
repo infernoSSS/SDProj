@@ -1,5 +1,8 @@
 package com.myteam.game.properties;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +11,7 @@ class PropertiesMapImpl implements Properties{
 
 	protected PropertiesMapImpl() {
 		map = new HashMap<>();
+		map.put("atlas", new TextureAtlas(Gdx.files.internal("atlas.atlas")));
 	}
 
 	@Override

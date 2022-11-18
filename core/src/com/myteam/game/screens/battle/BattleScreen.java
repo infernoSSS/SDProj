@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.myteam.game.SDGame;
+import com.myteam.game.properties.GlobalProperties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public class BattleScreen implements Screen {
 
     @Override
     public void show() {
-        atlas = new TextureAtlas(Gdx.files.internal("atlas.atlas"));
+        atlas = (TextureAtlas) GlobalProperties.getInstance().get("atlas");
         background = new Background("desert", atlas);
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
