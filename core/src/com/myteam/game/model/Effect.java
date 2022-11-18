@@ -7,11 +7,4 @@ public interface Effect {
 	Animation getAnimation();
 
 	BattlePosition getPosition();
-
-	enum EffectDisableCondition {
-		TargetDies,
-		RoundIsOver,
-		SceneIsOver,
-		BattleIsOver
-	}
 }
