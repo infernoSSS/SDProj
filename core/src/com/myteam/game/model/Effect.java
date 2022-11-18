@@ -1,6 +1,6 @@
 package com.myteam.game.model;
 
-import com.badlogic.gdx.graphics.g3d.model.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.myteam.game.utils.BattlePosition;
 
 public interface Effect {
