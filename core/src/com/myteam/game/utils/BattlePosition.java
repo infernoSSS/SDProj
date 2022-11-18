@@ -16,7 +16,7 @@ public class BattlePosition {
 	private final int x;
 	private final int y;
 
-	private BattlePosition(int x, int y) {
+	public BattlePosition(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
