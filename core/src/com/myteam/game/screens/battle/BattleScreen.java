@@ -35,8 +35,6 @@ public class BattleScreen implements Screen {
     private Music musicLoopBattleScreen;
     private EffectImpl effect;
     float stateTime;
-    private static float ratioSkalingCameraWidth;
-    private static float ratioSkalingCameraHeight;
     TextureRegion currentFrame;
 
     public BattleScreen(final SDGame game) {
