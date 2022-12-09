@@ -1,7 +1,9 @@
 package com.myteam.game.utils;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.myteam.game.properties.GlobalProperties;
 
 public class ScaledSpriteBatch extends SpriteBatch {
     private float scalingCameraWidth;
@@ -10,7 +12,12 @@ public class ScaledSpriteBatch extends SpriteBatch {
     public void draw (TextureRegion region, float x, float y) {
         draw(region, x, y, region.getRegionWidth() * scalingCameraWidth , region.getRegionHeight()*scalingCameraHeight);
     }
-
+    public void drawBackground (TextureRegion region) {
+        draw(region, (Gdx.graphics.getWidth()-((float) GlobalProperties.getInstance().get("screen_width") * scalingCameraHeight))/2, 0, (float) GlobalProperties.getInstance().get("screen_width") * scalingCameraHeight , (float) GlobalProperties.getInstance().get("screen_height")*scalingCameraHeight);
+    }
+    public void draw (TextureRegion region, float x, float y,float k) {
+        draw(region, x, y, region.getRegionWidth() * scalingCameraWidth * k, region.getRegionHeight()*scalingCameraHeight * k);
+    }
     public float getScalingCameraWidth() {
         return scalingCameraWidth;
     }
