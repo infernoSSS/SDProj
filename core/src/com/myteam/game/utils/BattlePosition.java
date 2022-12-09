@@ -1,17 +1,48 @@
 package com.myteam.game.utils;
 
-public class BattlePosition {
-	public static final BattlePosition PLAYER_SECOND_ROW_DOWN = new BattlePosition(20, 60);
-	public static final BattlePosition PLAYER_SECOND_ROW_TOP = new BattlePosition(20, 150);
-	public static final BattlePosition PLAYER_FIRS_ROW_DOWN = new BattlePosition(100, 10);
-	public static final BattlePosition PLAYER_FIRS_ROW_MIDDLE = new BattlePosition(100, 90);
-	public static final BattlePosition PLAYER_FIRS_ROW_TOP = new BattlePosition(100, 170);
+import com.badlogic.gdx.Gdx;
+import com.myteam.game.properties.GlobalProperties;
 
-	public static final BattlePosition ENEMY_SECOND_ROW_DOWN = new BattlePosition(1180, 60);
-	public static final BattlePosition ENEMY_SECOND_ROW_TOP = new BattlePosition(1180, 150);
-	public static final BattlePosition ENEMY_FIRS_ROW_DOWN = new BattlePosition(1080, 10);
-	public static final BattlePosition ENEMY_FIRS_ROW_MIDDLE = new BattlePosition(1080, 90);
-	public static final BattlePosition ENEMY_FIRS_ROW_TOP = new BattlePosition(1080, 170);
+public class BattlePosition {
+	public static BattlePosition PLAYER_SECOND_ROW_DOWN = new BattlePosition(
+			(int) (20 * ((float) Gdx.graphics.getWidth() / (float) GlobalProperties.getInstance().get("screen_width")))+((Float)GlobalProperties.getInstance().get("offset")).intValue(),
+			(int) (150 * ((float) Gdx.graphics.getHeight() / (float) GlobalProperties.getInstance().get("screen_height"))));
+
+	public static BattlePosition PLAYER_SECOND_ROW_TOP = new BattlePosition(
+			(int) (20 * ((float) Gdx.graphics.getWidth() / (float) GlobalProperties.getInstance().get("screen_width")))+((Float)GlobalProperties.getInstance().get("offset")).intValue(),
+			(int) (355 * ((float) Gdx.graphics.getHeight() / (float) GlobalProperties.getInstance().get("screen_height"))));
+
+	public static BattlePosition PLAYER_FIRS_ROW_DOWN = new BattlePosition(
+			(int) (168 * ((float) Gdx.graphics.getWidth() / (float) GlobalProperties.getInstance().get("screen_width")))+((Float)GlobalProperties.getInstance().get("offset")).intValue(),//900
+			(int) (35 * ((float) Gdx.graphics.getHeight() / (float) GlobalProperties.getInstance().get("screen_height"))));
+
+	public static BattlePosition PLAYER_FIRS_ROW_MIDDLE = new BattlePosition(
+			(int) (168 * ((float) Gdx.graphics.getWidth() / (float) GlobalProperties.getInstance().get("screen_width")))+((Float)GlobalProperties.getInstance().get("offset")).intValue(),//900
+			(int) (235 * ((float) Gdx.graphics.getHeight() / (float) GlobalProperties.getInstance().get("screen_height"))));
+
+	public static BattlePosition PLAYER_FIRS_ROW_TOP = new BattlePosition(
+			(int) (168 * ((float) Gdx.graphics.getWidth() / (float) GlobalProperties.getInstance().get("screen_width")))+((Float)GlobalProperties.getInstance().get("offset")).intValue(),//900
+			(int) (460 * ((float) Gdx.graphics.getHeight() / (float) GlobalProperties.getInstance().get("screen_height"))));
+
+	public static BattlePosition ENEMY_SECOND_ROW_DOWN = new BattlePosition(
+			(int) (1060 * ((float) Gdx.graphics.getWidth() / (float) GlobalProperties.getInstance().get("screen_width")))-((Float)GlobalProperties.getInstance().get("offset")).intValue(),
+			(int) (150 * ((float) Gdx.graphics.getHeight() / (float) GlobalProperties.getInstance().get("screen_height"))));
+
+	public static BattlePosition ENEMY_SECOND_ROW_TOP = new BattlePosition(
+			(int) (1060 * ((float) Gdx.graphics.getWidth() / (float) GlobalProperties.getInstance().get("screen_width")))-((Float)GlobalProperties.getInstance().get("offset")).intValue(),
+			(int) (355 * ((float) Gdx.graphics.getHeight() / (float) GlobalProperties.getInstance().get("screen_height"))));
+
+	public static BattlePosition ENEMY_FIRS_ROW_DOWN = new BattlePosition(
+			(int) (910 * ((float) Gdx.graphics.getWidth() / (float) GlobalProperties.getInstance().get("screen_width")))-((Float)GlobalProperties.getInstance().get("offset")).intValue(),//900
+			(int) (35 * ((float) Gdx.graphics.getHeight() / (float) GlobalProperties.getInstance().get("screen_height"))));
+
+	public static BattlePosition ENEMY_FIRS_ROW_MIDDLE = new BattlePosition(
+			(int) (910 * ((float) Gdx.graphics.getWidth() / (float) GlobalProperties.getInstance().get("screen_width")))-((Float)GlobalProperties.getInstance().get("offset")).intValue(),//900
+			(int) (235 * ((float) Gdx.graphics.getHeight() / (float) GlobalProperties.getInstance().get("screen_height"))));
+
+	public static BattlePosition ENEMY_FIRS_ROW_TOP = new BattlePosition(
+			(int) (910 * ((float) Gdx.graphics.getWidth() / (float) GlobalProperties.getInstance().get("screen_width")))-((Float)GlobalProperties.getInstance().get("offset")).intValue(),//900
+			(int) (460 * ((float) Gdx.graphics.getHeight() / (float) GlobalProperties.getInstance().get("screen_height"))));
 
 	private final int x;
 	private final int y;
@@ -19,6 +50,14 @@ public class BattlePosition {
 	public BattlePosition(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+
+	@Override
+	public String toString() {
+		return "BattlePosition{" +
+				"x=" + x +
+				", y=" + y +
+				'}';
 	}
 
 	public int getX() {
