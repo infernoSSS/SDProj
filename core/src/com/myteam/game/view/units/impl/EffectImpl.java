@@ -1,11 +1,12 @@
-package com.myteam.game.model.impl;
+package com.myteam.game.view.units.impl;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.myteam.game.model.Effect;
-import com.myteam.game.properties.GlobalProperties;
-import com.myteam.game.utils.BattlePosition;
+import com.myteam.game.controller.screens.battle.data.BattlePosition;
+import com.myteam.game.view.units.Effect;
+import com.myteam.game.view.properties.GlobalProperties;
+import com.myteam.game.view.utils.Position;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +18,8 @@ public class EffectImpl implements Effect {
     private BattlePosition battlePosition;
     private TextureRegion animationRegion;
     private static Map<String, TextureRegion[]> cashedRegion = new HashMap<>();
+    private boolean isBackground;
+    private Position position;
 
     @Override
     public Animation getAnimation() {
@@ -24,12 +27,24 @@ public class EffectImpl implements Effect {
     }
 
     @Override
-    public BattlePosition getPosition() {
+    public BattlePosition getBattlePosition() {
         return battlePosition;
     }
 
+    @Override
+    public boolean isBackGround() {
+        return isBackground;
+    }
+
+    @Override
+    public Position getPosition() {
+        return position;
+    }
+
     public EffectImpl(String name, BattlePosition battlePosition) {
+        this.isBackground = false;
         this.battlePosition = battlePosition;
+        this.position = null;
         effectFrames = cashedRegion.get(name);
         if (effectFrames == null) {
             TextureAtlas atlas = (TextureAtlas) GlobalProperties.getInstance().get("atlas");
@@ -43,7 +58,9 @@ public class EffectImpl implements Effect {
     }
 
     public EffectImpl(String name, int x, int y) {
-        this(name, new BattlePosition(x, y));
+        this(name, null);
+        this.isBackground = true;
+        this.position = new Position(x, y, false);
     }
 
     public static void clear (){

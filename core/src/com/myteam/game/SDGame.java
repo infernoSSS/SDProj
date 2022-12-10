@@ -3,9 +3,8 @@ package com.myteam.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.myteam.game.properties.GlobalProperties;
-import com.myteam.game.screens.battle.BattleScreen;
-import com.myteam.game.utils.BattlePosition;
+import com.myteam.game.view.properties.GlobalProperties;
+import com.myteam.game.view.screens.battle.BattleScreen;
 
 
 public class SDGame extends Game {
