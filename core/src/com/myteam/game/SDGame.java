@@ -3,9 +3,8 @@ package com.myteam.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.myteam.game.properties.GlobalProperties;
-import com.myteam.game.screens.battle.BattleScreen;
-import com.myteam.game.utils.BattlePosition;
+import com.myteam.game.view.properties.GlobalProperties;
+import com.myteam.game.view.screens.battle.BattleScreen;
 
 
 public class SDGame extends Game {
@@ -15,7 +14,7 @@ public class SDGame extends Game {
 
 		// libGDX по умолчанию использует Arial шрифт.
 		font = new BitmapFont();
-		GlobalProperties.getInstance().put("offset" , (Gdx.graphics.getWidth()-((float) GlobalProperties.getInstance().get("screen_width") * ((float) Gdx.graphics.getHeight() / 720.0f )))/2,false);
+		GlobalProperties.getInstance().put("offset" , (Gdx.graphics.getWidth()-((float) GlobalProperties.getInstance().get("screen_width") * ((Float) GlobalProperties.getInstance().get("k"))))/2,false);
      	this.setScreen(new BattleScreen(this));
 	}
 
