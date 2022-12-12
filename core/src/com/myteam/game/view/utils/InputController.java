@@ -46,15 +46,16 @@ public class InputController implements InputProcessor {
 		}
 	}
 
-	private float mapX(float x){                                                         //TODO реализовать маппинг с другими размерами экранов (android)
-		if (x < 0) x = 0; else
-			if (x > 1240) x = 1240; else
-		x = ((((float) Gdx.graphics.getWidth() / (float) GlobalProperties.getInstance().get("screen_width")))+((Float)GlobalProperties.getInstance().get("offset")).intValue() - ((Float)GlobalProperties.getInstance().get("offset"))) * (float) GlobalProperties.getInstance().get("screen_width") / (float) Gdx.graphics.getWidth();
+	private float mapX(float x){//TODO реализовать маппинг с другими размерами экранов (android)
+		x = (((Float) GlobalProperties.getInstance().get("offset")).intValue()+ x /(Float) GlobalProperties.getInstance().get("k"));
+		if (x < (Float) GlobalProperties.getInstance().get("offset")) x = 0.0f; else
+			if (x > ((Float) GlobalProperties.getInstance().get("offset") + (Float) GlobalProperties.getInstance().get("screen_width") )) x = 1240.0f; else
+				x = (((Float) GlobalProperties.getInstance().get("offset")).intValue()+ x /(Float) GlobalProperties.getInstance().get("k"));
 		return x;
 	}
 
 	private float mapY(float y){
-		y = (((float) Gdx.graphics.getHeight() / (float) GlobalProperties.getInstance().get("screen_height"))) * (float) GlobalProperties.getInstance().get("screen_height") / (float) Gdx.graphics.getHeight();
+		y = (y / (Float) GlobalProperties.getInstance().get("k") );
 		return y;
 	}
 
