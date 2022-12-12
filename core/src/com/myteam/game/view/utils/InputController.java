@@ -1,7 +1,9 @@
 package com.myteam.game.view.utils;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Rectangle;
+import com.myteam.game.view.properties.GlobalProperties;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,11 +46,15 @@ public class InputController implements InputProcessor {
 		}
 	}
 
-	private float mapX(float x){//TODO реализовать маппинг с другими размерами экранов (android)
+	private float mapX(float x){                                                         //TODO реализовать маппинг с другими размерами экранов (android)
+		if (x < 0) x = 0; else
+			if (x > 1240) x = 1240; else
+		x = ((((float) Gdx.graphics.getWidth() / (float) GlobalProperties.getInstance().get("screen_width")))+((Float)GlobalProperties.getInstance().get("offset")).intValue() - ((Float)GlobalProperties.getInstance().get("offset"))) * (float) GlobalProperties.getInstance().get("screen_width") / (float) Gdx.graphics.getWidth();
 		return x;
 	}
 
 	private float mapY(float y){
+		y = (((float) Gdx.graphics.getHeight() / (float) GlobalProperties.getInstance().get("screen_height"))) * (float) GlobalProperties.getInstance().get("screen_height") / (float) Gdx.graphics.getHeight();
 		return y;
 	}
 
