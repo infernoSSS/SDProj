@@ -1,7 +1,8 @@
-package com.myteam.game.view.screens.battle;
+package com.myteam.game.screens.battle;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -9,12 +10,17 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.myteam.game.SDGame;
-import com.myteam.game.view.units.impl.EffectImpl;
-import com.myteam.game.view.properties.GlobalProperties;
-import com.myteam.game.view.utils.ScaledSpriteBatch;
+import com.myteam.game.model.impl.EffectImpl;
+import com.myteam.game.properties.GlobalProperties;
+import com.myteam.game.utils.ScaledSpriteBatch;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BattleScreen implements Screen {
 

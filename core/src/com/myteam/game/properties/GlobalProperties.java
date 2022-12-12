@@ -1,4 +1,4 @@
-package com.myteam.game.view.properties;
+package com.myteam.game.properties;
 
 public final class GlobalProperties {
 	private static Properties properties = null;

@@ -1,4 +1,4 @@
-package com.myteam.game.view.properties;
+package com.myteam.game.properties;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -15,7 +15,6 @@ class PropertiesMapImpl implements Properties {
         map.put("effect_width", 50);
         map.put("screen_height", 720.0f);
         map.put("screen_width", 1240.0f);
-        map.put("k",Gdx.graphics.getHeight() / (float) GlobalProperties.getInstance().get("screen_height"));
     }
 
     @Override

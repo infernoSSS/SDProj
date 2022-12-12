@@ -1,4 +1,4 @@
-package com.myteam.game.view.properties;
+package com.myteam.game.properties;
 
 import java.util.Optional;
 
