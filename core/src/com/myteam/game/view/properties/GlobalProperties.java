@@ -7,6 +7,7 @@ public final class GlobalProperties {
 	}
 
 	public static Properties getInstance(){
+		
 		if(properties == null){
 			properties = new PropertiesMapImpl();
 		}

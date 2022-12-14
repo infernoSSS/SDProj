@@ -75,12 +75,17 @@ public class BattleScreenInstance implements Listener {
 		}
 	}
 
-	private void newScene(){
+	public void newScene(){
 		BattleScreenModelResponse response = controller.getTurn(battleId);
-		background = BattleScreenAssetsProvider.getBackgroundByMapName(response.getMapName());
-		musicTheme = BattleScreenAssetsProvider.getMusicThemeBYMapName(response.getMapName());
-		for(CharacterTransportData charData : response.getCharacters()){
+		if(response != null) {
+			background = BattleScreenAssetsProvider.getBackgroundByMapName(response.getMapName());
+			musicTheme = BattleScreenAssetsProvider.getMusicThemeBYMapName(response.getMapName());
+			for (CharacterTransportData charData : response.getCharacters()) {
 
+			}
+		}else{
+			background = BattleScreenAssetsProvider.getBackgroundByMapName("response.getMapName()");
+			musicTheme = BattleScreenAssetsProvider.getMusicThemeBYMapName("response.getMapName()");
 		}
 	}
 

@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.myteam.game.SDGame;
+import com.myteam.game.view.properties.Properties;
 import com.myteam.game.view.units.impl.EffectImpl;
 import com.myteam.game.view.properties.GlobalProperties;
 import com.myteam.game.view.utils.InputController;
@@ -39,22 +40,28 @@ public class BattleScreen implements Screen {
     private int battleId;
 
     public BattleScreen(final SDGame game, int battleId) {
+        
         this.game = game;
         this.battleId = battleId;
+        Properties p = GlobalProperties.getInstance();
+        
         atlas = (TextureAtlas) GlobalProperties.getInstance().get("atlas");
+        
         inputListener = new InputController();
         this.instance = new BattleScreenInstance(battleId, atlas, inputListener);
     }
 
     @Override
     public void show() {
+        
         batch = new ScaledSpriteBatch();
         batch.setScalingCameraWidth((float) Gdx.graphics.getWidth() / (float)GlobalProperties.getInstance().get("screen_width"));
         batch.setScalingCameraHeight((float) Gdx.graphics.getHeight() / (float)GlobalProperties.getInstance().get("screen_height") );
         camera = new OrthographicCamera();
         camera.setToOrtho(false,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new FitViewport (Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
-        background = new Background(instance.getBackgroundName(), atlas);
+//        background = new Background(instance.getBackgroundName(), atlas);
+        instance.newScene();
         musicLoopBattleScreen = Gdx.audio.newMusic(Gdx.files.internal(instance.getMusicName()));
         musicLoopBattleScreen.setLooping(true);
         musicLoopBattleScreen.play();
@@ -63,12 +70,13 @@ public class BattleScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        
         Gdx.gl.glClearColor(0, 0, 0, 1);
 //        currentFrame = (TextureRegion) effect.getAnimation().getKeyFrame(stateTime, true);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stateTime+=Gdx.graphics.getDeltaTime();
         batch.begin();
-        background.render(batch, inTravel);
+//        background.render(batch, inTravel);
 //        batch.draw(currentFrame, effect.getPosition().getX(), effect.getPosition().getY());
         batch.end();
     }
