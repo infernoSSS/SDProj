@@ -37,15 +37,10 @@ public class Position {
 	private final int x;
 	private final int y;
 
+
 	public Position(int x, int y, boolean isEnemy) {
-		if (!isEnemy) {
-			this.x = (int) (x * ((float) Gdx.graphics.getWidth() / (float) GlobalProperties.getInstance().get("screen_width")))
-					+ ((Float) GlobalProperties.getInstance().get("offset")).intValue();
-		} else {
-			this.x = (int) (x * ((float) Gdx.graphics.getWidth() / (float) GlobalProperties.getInstance().get("screen_width")))
-					- ((Float) GlobalProperties.getInstance().get("offset")).intValue();
-		}
-		this.y = (int) (y * ((float) Gdx.graphics.getHeight() / (float) GlobalProperties.getInstance().get("screen_height")));
+		this.x = (int) (x * (Float) GlobalProperties.getInstance().get("k"))  + ((Float) GlobalProperties.getInstance().get("offset")).intValue();
+		this.y = (int) (y * (Float) GlobalProperties.getInstance().get("k"));
 	}
 
 	@Override
