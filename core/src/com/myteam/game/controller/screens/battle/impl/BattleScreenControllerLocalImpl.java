@@ -6,17 +6,17 @@ import com.myteam.game.controller.screens.battle.transport.BattleScreenModelResp
 
 public class BattleScreenControllerLocalImpl implements BattleScreenController {
 	@Override
-	public BattleScreenModelResponse getTurn() {
+	public BattleScreenModelResponse getTurn(int battleId) {
 		return null;
 	}
 
 	@Override
-	public void sendTurn(BattleScreenModelRequest data) {
+	public void sendTurn(BattleScreenModelRequest data, int battleId) {
 
 	}
 
 	@Override
-	public BattleScreenModelResponse turn(BattleScreenModelRequest data) {
+	public BattleScreenModelResponse turn(BattleScreenModelRequest data, int battleId) {
 		return null;
 	}
 }

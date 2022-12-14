@@ -15,11 +15,10 @@ public class SDGame extends Game {
 		// libGDX по умолчанию использует Arial шрифт.
 		font = new BitmapFont();
 		GlobalProperties.getInstance().put("offset" , (Gdx.graphics.getWidth()-((float) GlobalProperties.getInstance().get("screen_width") * ((float) Gdx.graphics.getHeight() / 720.0f )))/2,false);
-     	this.setScreen(new BattleScreen(this));
+     	this.setScreen(new BattleScreen(this, 0));
 	}
 
 	public void render() {
-
 		super.render(); // важно!
 	}
 

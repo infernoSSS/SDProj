@@ -9,11 +9,15 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.myteam.game.SDGame;
 import com.myteam.game.view.units.impl.EffectImpl;
 import com.myteam.game.view.properties.GlobalProperties;
+import com.myteam.game.view.utils.InputController;
+import com.myteam.game.view.utils.Listener;
+import com.myteam.game.view.utils.Position;
 import com.myteam.game.view.utils.ScaledSpriteBatch;
 
 public class BattleScreen implements Screen {
@@ -27,26 +31,31 @@ public class BattleScreen implements Screen {
     private OrthographicCamera camera;
     private boolean inTravel = true;
     private Music musicLoopBattleScreen;
-    private EffectImpl effect;
-    float stateTime;
-    TextureRegion currentFrame;
+//    private EffectImpl effect;
+    private BattleScreenInstance instance;
+    private InputController inputListener;
+    private float stateTime;
+    private TextureRegion currentFrame;
+    private int battleId;
 
-    public BattleScreen(final SDGame game) {
+    public BattleScreen(final SDGame game, int battleId) {
         this.game = game;
+        this.battleId = battleId;
+        atlas = (TextureAtlas) GlobalProperties.getInstance().get("atlas");
+        inputListener = new InputController();
+        this.instance = new BattleScreenInstance(battleId, atlas, inputListener);
     }
 
     @Override
     public void show() {
-        atlas = (TextureAtlas) GlobalProperties.getInstance().get("atlas");
-        effect = new EffectImpl("hesagsagsa",100, 170);
-        background = new Background("desert", atlas);
         batch = new ScaledSpriteBatch();
-        batch.setScalingCameraWidth((float) Gdx.graphics.getWidth() / 1240.0f);
-        batch.setScalingCameraHeight((float) Gdx.graphics.getHeight() / 720.0f );
+        batch.setScalingCameraWidth((float) Gdx.graphics.getWidth() / (float)GlobalProperties.getInstance().get("screen_width"));
+        batch.setScalingCameraHeight((float) Gdx.graphics.getHeight() / (float)GlobalProperties.getInstance().get("screen_height") );
         camera = new OrthographicCamera();
         camera.setToOrtho(false,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new FitViewport (Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
-        musicLoopBattleScreen = Gdx.audio.newMusic(Gdx.files.internal("MusicLoopBattleScreen.wav"));
+        background = new Background(instance.getBackgroundName(), atlas);
+        musicLoopBattleScreen = Gdx.audio.newMusic(Gdx.files.internal(instance.getMusicName()));
         musicLoopBattleScreen.setLooping(true);
         musicLoopBattleScreen.play();
         stateTime = 0f;
@@ -54,13 +63,13 @@ public class BattleScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0.2f, 1);
-        currentFrame = (TextureRegion) effect.getAnimation().getKeyFrame(stateTime, true);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+//        currentFrame = (TextureRegion) effect.getAnimation().getKeyFrame(stateTime, true);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stateTime+=Gdx.graphics.getDeltaTime();
         batch.begin();
         background.render(batch, inTravel);
-        batch.draw(currentFrame, effect.getPosition().getX(), effect.getPosition().getY());
+//        batch.draw(currentFrame, effect.getPosition().getX(), effect.getPosition().getY());
         batch.end();
     }
 
@@ -89,12 +98,31 @@ public class BattleScreen implements Screen {
         musicLoopBattleScreen.dispose();
         atlas.dispose();
     }
+
+    public static class DeckTable implements Listener {
+        private BattleScreenInstance instance;
+        private Position position;
+
+        public DeckTable(BattleScreenInstance instance) {
+            this.instance = instance;
+            this.position = new Position(0,0, false);
+        }
+
+        @Override
+        public void sendEvent(Object event) {
+
+        }
+
+        public void draw(SpriteBatch batch){
+
+        }
+    }
+
     private static class Background {
         float themeOffset;
         TextureRegion back;
         TextureRegion theme;
         TextureRegion ground;
-
 
         Background(String name, TextureAtlas atlas) {
             back = atlas.findRegion(name + "_back");
@@ -102,7 +130,7 @@ public class BattleScreen implements Screen {
             ground = atlas.findRegion(name + "_ground");
             themeOffset = 0;
         }
-        
+
         void render(SpriteBatch batch, boolean inTravel) {
             batch.draw(back, 0, 0);
             if (!inTravel) {

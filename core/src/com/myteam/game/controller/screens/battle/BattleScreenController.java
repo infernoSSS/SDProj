@@ -16,11 +16,11 @@ public interface BattleScreenController {
 		}
 	}
 
-	public BattleScreenModelResponse getTurn();
+	public BattleScreenModelResponse getTurn(int battleId);
 
-	public void sendTurn(BattleScreenModelRequest data);
+	public void sendTurn(BattleScreenModelRequest data, int battleId);
 
-	public BattleScreenModelResponse turn(BattleScreenModelRequest data);
+	public BattleScreenModelResponse turn(BattleScreenModelRequest data, int battleId);
 
 	enum ScreenControllerProvider {
 		LOCAL, SERVER
