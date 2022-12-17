@@ -47,15 +47,14 @@ public class InputController implements InputProcessor {
 	}
 
 	private float mapX(float x){//TODO реализовать маппинг с другими размерами экранов (android)
-		x = (((Float) GlobalProperties.getInstance().get("offset")).intValue()+ x /(Float) GlobalProperties.getInstance().get("k"));
-		if (x < (Float) GlobalProperties.getInstance().get("offset")) x = 0.0f; else
-			if (x > ((Float) GlobalProperties.getInstance().get("offset") + (Float) GlobalProperties.getInstance().get("screen_width") )) x = 1240.0f; else
-				x = (((Float) GlobalProperties.getInstance().get("offset")).intValue()+ x /(Float) GlobalProperties.getInstance().get("k"));
+		if (x <= (Float) GlobalProperties.getInstance().get("offset")) x = 0.0f; else
+			if (x >= (Float) GlobalProperties.getInstance().get("offset") + (Float) GlobalProperties.getInstance().get("screen_width")*(Float) GlobalProperties.getInstance().get("k")) x = 1240.0f; else
+				x = (x - ((Float) GlobalProperties.getInstance().get("offset")).intValue())/(Float) GlobalProperties.getInstance().get("k");
 		return x;
 	}
 
 	private float mapY(float y){
-		y = (y / (Float) GlobalProperties.getInstance().get("k") );
+		y = y / (Float) GlobalProperties.getInstance().get("k");
 		return y;
 	}
 
