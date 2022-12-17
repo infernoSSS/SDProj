@@ -1,5 +1,6 @@
 package com.myteam.game.view.units.impl;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.myteam.game.view.units.Card;
 import com.myteam.game.view.units.Character;
@@ -27,6 +28,11 @@ public class CharacterImpl implements Character {
 	@Override
 	public boolean isAlive() {
 		return isAlive;
+	}
+
+	@Override
+	public void draw(SpriteBatch batch) {
+
 	}
 
 	@Override

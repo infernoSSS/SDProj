@@ -13,13 +13,18 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.myteam.game.SDGame;
+import com.myteam.game.controller.screens.battle.data.BattlePosition;
 import com.myteam.game.view.properties.Properties;
+import com.myteam.game.view.units.Unit;
 import com.myteam.game.view.units.impl.EffectImpl;
 import com.myteam.game.view.properties.GlobalProperties;
 import com.myteam.game.view.utils.InputController;
 import com.myteam.game.view.utils.Listener;
 import com.myteam.game.view.utils.Position;
 import com.myteam.game.view.utils.ScaledSpriteBatch;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BattleScreen implements Screen {
 
@@ -32,7 +37,8 @@ public class BattleScreen implements Screen {
     private OrthographicCamera camera;
     private boolean inTravel = true;
     private Music musicLoopBattleScreen;
-//    private EffectImpl effect;
+    private EffectImpl effect;
+    private List<EffectImpl> effects;
     private BattleScreenInstance instance;
     private InputController inputListener;
     private float stateTime;
@@ -40,20 +46,19 @@ public class BattleScreen implements Screen {
     private int battleId;
 
     public BattleScreen(final SDGame game, int battleId) {
-        
+
         this.game = game;
         this.battleId = battleId;
         Properties p = GlobalProperties.getInstance();
-        
+
         atlas = (TextureAtlas) GlobalProperties.getInstance().get("atlas");
-        
+
         inputListener = new InputController();
         this.instance = new BattleScreenInstance(battleId, atlas, inputListener);
     }
 
     @Override
     public void show() {
-        
         batch = new ScaledSpriteBatch();
         batch.setScalingCameraWidth((float) Gdx.graphics.getWidth() / (float)GlobalProperties.getInstance().get("screen_width"));
         batch.setScalingCameraHeight((float) Gdx.graphics.getHeight() / (float)GlobalProperties.getInstance().get("screen_height") );
@@ -66,6 +71,12 @@ public class BattleScreen implements Screen {
         musicLoopBattleScreen.setLooping(true);
         musicLoopBattleScreen.play();
         stateTime = 0f;
+
+        // Отладка
+        effects = new ArrayList<>();
+        effects.add(new EffectImpl("smoke_effect", BattlePosition.PLAYER_FIRS_ROW_TOP, inputListener, Unit.RealiseCondition.SCENE_END));
+        effects.add(new EffectImpl("smoke_effect", BattlePosition.PLAYER_SECOND_ROW_TOP, inputListener, Unit.RealiseCondition.ROUND_END));
+        effects.add(new EffectImpl("smoke_effect", BattlePosition.PLAYER_SECOND_ROW_DOWN, inputListener, Unit.RealiseCondition.CURRENT_ANIMATION_END));
     }
 
     @Override
@@ -76,6 +87,10 @@ public class BattleScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stateTime+=Gdx.graphics.getDeltaTime();
         batch.begin();
+
+        for (EffectImpl effect : effects) {
+            effect.draw(batch);
+        }
 //        background.render(batch, inTravel);
 //        batch.draw(currentFrame, effect.getPosition().getX(), effect.getPosition().getY());
         batch.end();

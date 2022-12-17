@@ -5,11 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.myteam.game.controller.screens.battle.data.BattlePosition;
 import com.myteam.game.view.utils.Position;
 
-public interface Effect extends Unit{
-//	Animation getAnimation();
-	void draw(SpriteBatch batch);
-
+public interface Effect extends Unit {
 	boolean isBackGround();
-
-	Position getPosition();
 }

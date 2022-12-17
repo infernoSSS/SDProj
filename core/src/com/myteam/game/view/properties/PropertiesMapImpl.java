@@ -13,7 +13,10 @@ class PropertiesMapImpl implements Properties {
         
         map = new HashMap<>();
         map.put("atlas", new TextureAtlas(Gdx.files.internal("atlas.atlas")));
-        map.put("effect_width", 50);
+
+        map.put("effect_frame_width", 32);
+        map.put("effect_width", 300f);
+        map.put("effect_height", 300f);
         map.put("screen_height", 720.0f);
         map.put("screen_width", 1240.0f);
         map.put("k",Gdx.graphics.getHeight() / 720.0f);

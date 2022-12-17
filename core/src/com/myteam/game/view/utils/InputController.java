@@ -41,8 +41,11 @@ public class InputController implements InputProcessor {
 	}
 
 	public void sendEvent(Object event){
-		for(Listener l : listeners.get(event.getClass())){
-			l.sendEvent(event);
+		List<Listener> listeners = this.listeners.get(event.getClass());
+		if (listeners != null) {
+			for(Listener l : listeners){
+				l.sendEvent(event);
+			}
 		}
 	}
 
