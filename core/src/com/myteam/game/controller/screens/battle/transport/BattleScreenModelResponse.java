@@ -11,6 +11,5 @@ public interface BattleScreenModelResponse {
 	public String getMapName();
 	public List<CharacterTransportData> getCharacters();
 	public Map<CharacterTransportData, List<CardTransportData>> getCards();
-	public List<String> getEffectsNames();
 	public List<Object> getTurnEvents();
 }
