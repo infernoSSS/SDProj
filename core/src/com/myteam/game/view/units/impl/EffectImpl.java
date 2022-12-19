@@ -1,11 +1,12 @@
 package com.myteam.game.view.units.impl;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.myteam.game.controller.screens.battle.data.BattlePosition;
+import com.myteam.game.view.screens.battle.events.CurrentAnimationEndEvent;
 import com.myteam.game.view.units.Effect;
 import com.myteam.game.view.properties.GlobalProperties;
 import com.myteam.game.view.utils.InputController;
@@ -15,51 +16,59 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EffectImpl implements Effect {
-
-    private Animation<TextureRegion> effectAnimation;
-    private TextureRegion[] effectFrames;
-    private BattlePosition battlePosition;
-    private TextureRegion animationRegion;
-    private InputController listener;
     private static Map<String, TextureRegion[]> cashedRegion = new HashMap<>();
+
+    private TextureRegion[] frames;
+    private InputController listener;
+    private RealiseCondition condition;
+
+    private final float x;
+    private final float y;
+    private final float width;
+    private final float height;
+
+    private Animation<TextureRegion> animation;
     private boolean isBackground;
-    private RealiseCondition realiseCondition;
-    private Position position;
-    private boolean isAlive;
+    private boolean isExists;
+    private float stateTime;
 
-    public EffectImpl(String name, BattlePosition battlePosition, InputController listener, RealiseCondition realiseCondition) {
-        this.realiseCondition = realiseCondition;
-        this.isBackground = false;
-        this.battlePosition = battlePosition;
-        this.position = null;
-        effectFrames = cashedRegion.get(name);
-        if (effectFrames == null) {
-            TextureAtlas atlas = (TextureAtlas) GlobalProperties.getInstance().get("atlas");
-            animationRegion = atlas.findRegion(name);
-            TextureRegion[][] tmp = animationRegion.split((Integer) GlobalProperties.getInstance().get("effect_width"), animationRegion.getRegionHeight());
-            effectFrames = tmp[0];
-            cashedRegion.put(name, effectFrames);
+    public EffectImpl(String base, BattlePosition battlePosition, InputController listener, RealiseCondition condition) {
+        this.frames = initFrames(base);
+        this.listener = listener;
+        this.condition = condition;
+
+        Position position = Position.getPositionByBattlePosition(battlePosition);
+        if (position.isEnemy()) {
+            x = position.getX() + ((Float)GlobalProperties.getInstance().get("effect_width")).intValue();
+            width = -(Float) GlobalProperties.getInstance().get("effect_width");
         }
+        else {
+            x = position.getX();
+            width = (Float) GlobalProperties.getInstance().get("effect_width");
+        }
+        y = position.getY();
+        height = (Float) GlobalProperties.getInstance().get("effect_height");
 
-        effectAnimation = new Animation<TextureRegion>(0.1f, effectFrames);
-
-        this.isAlive = true;
-    }
-
-    public EffectImpl(String name, int x, int y, InputController listener, RealiseCondition realiseCondition) {
-        this(name, null, listener, realiseCondition);
-        this.isBackground = true;
-        this.position = new Position(x, y, false);
+        animation = new Animation<>(0.1f, frames);
+        isBackground = false;
+        isExists = true;
+        stateTime = (float) Math.random() % 100;
     }
 
     @Override
     public void draw(SpriteBatch batch) {
-
+        if (isAlive() || !animationFinished()) {
+            TextureRegion frame = currentFrame();
+            batch.draw(frame, x, y, width, height);
+        }
+        if (animationEnds()) {
+            timeHasCome();
+        }
     }
 
     @Override
     public boolean isAlive() {
-        return isAlive;
+        return isExists;
     }
 
     @Override
@@ -68,17 +77,45 @@ public class EffectImpl implements Effect {
     }
 
     @Override
-    public Position getPosition() {
-        return position;
-    }
-
-    public static void clear (){
-        cashedRegion = new HashMap<>();
-    }
-
-    @Override
     public void sendEvent(Object event) {
 
+    }
+
+
+    // Private
+
+    static private TextureRegion[] initFrames(String name) {
+        TextureRegion[] frames = cashedRegion.get(name);
+        if (frames == null) {
+            TextureAtlas atlas = (TextureAtlas) GlobalProperties.getInstance().get("atlas");
+            TextureRegion region = atlas.findRegion(name);
+            TextureRegion[][] tmp = region.split((Integer) GlobalProperties.getInstance().get("effect_frame_width"), region.getRegionHeight());
+            frames = tmp[0];
+            cashedRegion.put(name, frames);
+        }
+        return frames;
+    }
+
+    private TextureRegion currentFrame() {
+        return animation.getKeyFrame(delta(), isAlive());
+    }
+
+    private boolean animationEnds() {
+        return condition == RealiseCondition.CURRENT_ANIMATION_END;
+    }
+
+    private boolean animationFinished() {
+        return animation.isAnimationFinished(delta());
+    }
+
+    private void timeHasCome() {
+        listener.sendEvent(new CurrentAnimationEndEvent());
+        isExists = false;
+    }
+
+    private float delta() {
+        stateTime += Gdx.graphics.getDeltaTime();
+        return stateTime;
     }
 }
 

@@ -14,6 +14,11 @@ public class ScaledSpriteBatch extends SpriteBatch {
 				region.getRegionHeight() * scalingCameraHeight);
 	}
 
+	public void draw(TextureRegion region, float x, float y, float width, float height) {
+		super.draw(region, x, y, width * scalingCameraWidth,
+				height * scalingCameraHeight);
+	}
+
 	public void drawBackground(TextureRegion region) {
 		draw(region,
 				(Gdx.graphics.getWidth()

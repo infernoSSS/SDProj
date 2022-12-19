@@ -36,11 +36,13 @@ public class Position {
 
 	private final int x;
 	private final int y;
+	private final boolean isEnemy;
 
 
 	public Position(int x, int y, boolean isEnemy) {
 		this.x = (int) (x * (Float) GlobalProperties.getInstance().get("k"))  + ((Float) GlobalProperties.getInstance().get("offset")).intValue();
 		this.y = (int) (y * (Float) GlobalProperties.getInstance().get("k"));
+		this.isEnemy = isEnemy;
 	}
 
 	@Override
@@ -57,5 +59,9 @@ public class Position {
 
 	public int getY() {
 		return y;
+	}
+
+	public boolean isEnemy() {
+		return isEnemy;
 	}
 }
