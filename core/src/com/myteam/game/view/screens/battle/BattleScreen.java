@@ -9,13 +9,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.myteam.game.SDGame;
 import com.myteam.game.controller.screens.battle.data.BattlePosition;
 import com.myteam.game.view.properties.Properties;
 import com.myteam.game.view.units.Unit;
+import com.myteam.game.view.units.impl.CharacterImpl;
 import com.myteam.game.view.units.impl.EffectImpl;
 import com.myteam.game.view.properties.GlobalProperties;
 import com.myteam.game.view.utils.InputController;
@@ -37,8 +37,7 @@ public class BattleScreen implements Screen {
     private OrthographicCamera camera;
     private boolean inTravel = true;
     private Music musicLoopBattleScreen;
-    private EffectImpl effect;
-    private List<EffectImpl> effects;
+    private List<Unit> units;
     private BattleScreenInstance instance;
     private InputController inputListener;
     private float stateTime;
@@ -73,10 +72,13 @@ public class BattleScreen implements Screen {
         stateTime = 0f;
 
         // Отладка
-        effects = new ArrayList<>();
-        effects.add(new EffectImpl("smoke_effect", BattlePosition.PLAYER_FIRS_ROW_TOP, inputListener, Unit.RealiseCondition.SCENE_END));
-        effects.add(new EffectImpl("smoke_effect", BattlePosition.PLAYER_SECOND_ROW_TOP, inputListener, Unit.RealiseCondition.ROUND_END));
-        effects.add(new EffectImpl("smoke_effect", BattlePosition.PLAYER_SECOND_ROW_DOWN, inputListener, Unit.RealiseCondition.CURRENT_ANIMATION_END));
+        units = new ArrayList<>();
+        units.add(new CharacterImpl("unsupported", "character/mercenary/women/stay/aim", BattlePosition.PLAYER_FIRS_ROW_MIDDLE, inputListener, Unit.RealiseCondition.SCENE_END));
+        units.add(new CharacterImpl("unsupported", "character/mercenary/women/stay/noaim", BattlePosition.ENEMY_FIRS_ROW_MIDDLE, inputListener, Unit.RealiseCondition.SCENE_END));
+        units.add(new CharacterImpl("unsupported", "character/mercenary/women/stay/noaim", BattlePosition.ENEMY_SECOND_ROW_TOP, inputListener, Unit.RealiseCondition.SCENE_END));
+        units.add(new CharacterImpl("unsupported", "character/mercenary/women/stay/noaim", BattlePosition.ENEMY_SECOND_ROW_DOWN, inputListener, Unit.RealiseCondition.SCENE_END));
+        units.add(new EffectImpl("effect/smoke", BattlePosition.ENEMY_FIRS_ROW_MIDDLE, inputListener, Unit.RealiseCondition.ROUND_END));
+        units.add(new EffectImpl("effect/smoke", BattlePosition.PLAYER_FIRS_ROW_TOP, inputListener, Unit.RealiseCondition.CURRENT_ANIMATION_END));
     }
 
     @Override
@@ -88,8 +90,8 @@ public class BattleScreen implements Screen {
         stateTime+=Gdx.graphics.getDeltaTime();
         batch.begin();
 
-        for (EffectImpl effect : effects) {
-            effect.draw(batch);
+        for (Unit unit : units) {
+            unit.draw(batch);
         }
 //        background.render(batch, inTravel);
 //        batch.draw(currentFrame, effect.getPosition().getX(), effect.getPosition().getY());
